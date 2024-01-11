@@ -8,12 +8,15 @@ import dash
 from dash import Dash , dcc , html
 from dash.dependencies import Input, Output
 
-from .views_dash.dash_test import dash_test
+
+
+from .views_dash.dash_test import dash_test 
+from .views_dash.dash_da import dash_da
 
 
 
 
-import config
+##import config
 
 naming_convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -31,7 +34,8 @@ migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(config)
+    #app.config.from_object(config)
+    app.config.from_envvar('APP_CONFIG_FILE')
 
     # ORM
     db.init_app(app)
@@ -42,18 +46,24 @@ def create_app():
     from . import models
 
     # 블루프린트
-    from .views import main_views, question_views, answer_views, auth_views , dashboard_views
+    from .views import question_views, answer_views, auth_views , dashboard_views , main_views , themore_views
     app.register_blueprint(main_views.bp)
     app.register_blueprint(question_views.bp)
     app.register_blueprint(answer_views.bp)
     app.register_blueprint(auth_views.bp)
     app.register_blueprint(dashboard_views.bp)
+    app.register_blueprint( themore_views.bp )
 
     dash_list = []
     for i in dir(dash_test):
         if 'wij_' in i:            
             dash_list.append( dash_test.__dict__[i]( app , ('/'+i+'/')) )
-            
+    
+    
+    for i in dir(dash_da):        
+        if 'wij_' in i:            
+            #print( dash_da.__dict__[i] )
+            dash_list.append( dash_da.__dict__[i]( app , ('/'+i+'/')) )
     
 
 

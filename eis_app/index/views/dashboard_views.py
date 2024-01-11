@@ -14,16 +14,8 @@ from index.views.auth_views import login_required
 
 bp = Blueprint('dashboard', __name__, url_prefix='/dashboard')
 
-@bp.route('/app01')
+@bp.route('/app/<appid>')
 @login_required
-def app01():
-    #return 'dashboard'
-     return render_template('dashboard/dash.html' , dash_url='/wij_dashapp1')
+def app(appid):
+     return render_template('dashboard/dash.html' , dash_url=('/'+appid))
 
-@bp.route('/app02')
-def app02():
-    return render_template('dashboard/dash.html' , dash_url= '/wij_dashapp2' )
-
-@bp.route('/app03')
-def app03():
-    return render_template('dashboard/dash.html' , dash_url= '/wij_dashapp3' )

@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- 더모아 계산기 -->
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>The More Calculator</h2>
+        </div>
+    </div>
+    <div class="row">
+        
+            <div class="col">
+                <div class="form-group">
+                    <div id="fxShortCut">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="ms-2 me-auto">
+                                    <!--div class="fw-bold">메이저 1</div-->
+                                    <!--a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='USD' ) }}">USD</a-->
+                                    <div class="me-auto p-1 d-inline-block">메이저</div>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='JPY' ) }}">JPY</a>                                    
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='EUR' ) }}">EUR</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='GBP' ) }}">GBP</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='CNY' ) }}">CNY</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='AUD' ) }}">AUD</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='NZD' ) }}">NZD</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='CAD' ) }}">CAD</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='CHF' ) }}">CHF</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='HKD' ) }}">HKD</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='SGD' ) }}">SGD</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='KRW' ) }}">KRW</a>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="ms-2 me-auto">
+                                    <div class="me-auto p-1 d-inline-block">아시아</div>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='THB' ) }}">THB</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='VND' ) }}">VND</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='MYR' ) }}">MYR</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='TWD' ) }}">TWD</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='INR' ) }}">INR</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='PHP' ) }}">PHP</a>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="ms-2 me-auto">
+                                    <div class="me-auto p-1 d-inline-block">유 럽</div>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='SEK' ) }}">SEK</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='NOK' ) }}">NOK</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='DKK' ) }}">DKK</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='PLN' ) }}">PLN</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='TRY' ) }}">TRY</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='CZK' ) }}">CZK</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='HUF' ) }}">HUF</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='RUB' ) }}">RUB</a>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="ms-2 me-auto">
+                                    <div class="me-auto p-1 d-inline-block">기 타</div>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='SAR' ) }}">SAR</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='AED' ) }}">AED</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='MXN' ) }}">MXN</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <form method="POST">
+            <div class="form-group col">
+                <div class="row">
+                    <div class="col">
+                        <label for="currencyAmount">거래 금액</label>
+                        <input id="currencyAmount" name="currencyAmount" class="form-control" type="number" value="{{ cal_info['QTY'] or '1' }}" inputmode="decimal" step="0.01">
+                    </div>
+                    <div class="col">
+                        <label for="currencySelectBox">거래 통화 목록</label>
+                        <select id="currencySelectBox" name="currencySelectBox" class="form-select">                            
+                            <option value="EUR" {{ 'selected' if cal_info['CUR_ID'] == 'EUR'  }}>EUR</option>
+                            <option value="GBP" {{ 'selected' if cal_info['CUR_ID'] == 'GBP'  }}>GBP</option>
+                            <option value="JPY" {{ 'selected' if cal_info['CUR_ID'] == 'JPY'  }}>JPY</option>
+                            <option value="CAD" {{ 'selected' if cal_info['CUR_ID'] == 'CAD'  }}>CAD</option>
+                            <option value="AUD" {{ 'selected' if cal_info['CUR_ID'] == 'AUD'  }}>AUD</option>
+                            <option value="CNY" {{ 'selected' if cal_info['CUR_ID'] == 'CNY'  }}>CNY</option>
+                            <option value="CHF" {{ 'selected' if cal_info['CUR_ID'] == 'CHF'  }}>CHF</option>
+                            <option value="AED" {{ 'selected' if cal_info['CUR_ID'] == 'AED'  }}>AED</option>
+                            <option value="BDT" {{ 'selected' if cal_info['CUR_ID'] == 'BDT'  }}>BDT</option>
+                            <option value="ARS" {{ 'selected' if cal_info['CUR_ID'] == 'ARS'  }}>ARS</option>
+                            <option value="BRL" {{ 'selected' if cal_info['CUR_ID'] == 'BRL'  }}>BRL</option>
+                            <option value="CLP" {{ 'selected' if cal_info['CUR_ID'] == 'CLP'  }}>CLP</option>
+                            <option value="CZK" {{ 'selected' if cal_info['CUR_ID'] == 'CZK'  }}>CZK</option>
+                            <option value="EGP" {{ 'selected' if cal_info['CUR_ID'] == 'EGP'  }}>EGP</option>
+                            <option value="DKK" {{ 'selected' if cal_info['CUR_ID'] == 'DKK'  }}>DKK</option>
+                            <option value="HKD" {{ 'selected' if cal_info['CUR_ID'] == 'HKD'  }}>HKD</option>
+                            <option value="HUF" {{ 'selected' if cal_info['CUR_ID'] == 'HUF'  }}>HUF</option>
+                            <option value="INR" {{ 'selected' if cal_info['CUR_ID'] == 'INR'  }}>INR</option>
+                            <option value="KRW" {{ 'selected' if cal_info['CUR_ID'] == 'KRW'  }}>KRW</option>
+                            <option value="MOP" {{ 'selected' if cal_info['CUR_ID'] == 'MOP'  }}>MOP</option>
+                            <option value="LKR" {{ 'selected' if cal_info['CUR_ID'] == 'LKR'  }}>LKR</option>
+                            <option value="MXN" {{ 'selected' if cal_info['CUR_ID'] == 'MXN'  }}>MXN</option>
+                            <option value="MYR" {{ 'selected' if cal_info['CUR_ID'] == 'MYR'  }}>MYR</option>
+                            <option value="NGN" {{ 'selected' if cal_info['CUR_ID'] == 'NGN'  }}>NGN</option>
+                            <option value="NOK" {{ 'selected' if cal_info['CUR_ID'] == 'NOK'  }}>NOK</option>
+                            <option value="NPR" {{ 'selected' if cal_info['CUR_ID'] == 'NPR'  }}>NPR</option>
+                            <option value="NZD" {{ 'selected' if cal_info['CUR_ID'] == 'NZD'  }}>NZD</option>
+                            <option value="PEN" {{ 'selected' if cal_info['CUR_ID'] == 'PEN'  }}>PEN</option>
+                            <option value="RON" {{ 'selected' if cal_info['CUR_ID'] == 'RON'  }}>RON</option>
+                            <option value="PLN" {{ 'selected' if cal_info['CUR_ID'] == 'PLN'  }}>PLN</option>
+                            <option value="PHP" {{ 'selected' if cal_info['CUR_ID'] == 'PHP'  }}>PHP</option>
+                            <option value="RUB" {{ 'selected' if cal_info['CUR_ID'] == 'RUB'  }}>RUB</option>
+                            <option value="SAR" {{ 'selected' if cal_info['CUR_ID'] == 'SAR'  }}>SAR</option>
+                            <option value="SEK" {{ 'selected' if cal_info['CUR_ID'] == 'SEK'  }}>SEK</option>
+                            <option value="SGD" {{ 'selected' if cal_info['CUR_ID'] == 'SGD'  }}>SGD</option>
+                            <option value="THB" {{ 'selected' if cal_info['CUR_ID'] == 'THB'  }}>THB</option>
+                            <option value="TRY" {{ 'selected' if cal_info['CUR_ID'] == 'TRY'  }}>TRY</option>
+                            <option value="TWD" {{ 'selected' if cal_info['CUR_ID'] == 'TWD'  }}>TWD</option>
+                            <option value="UAH" {{ 'selected' if cal_info['CUR_ID'] == 'UAH'  }}>UAH</option>
+                            <option value="UYU" {{ 'selected' if cal_info['CUR_ID'] == 'UYU'  }}>UYU</option>
+                            <option value="VND" {{ 'selected' if cal_info['CUR_ID'] == 'VND'  }}>VND</option>
+                        </select>
+                    </div>                    
+                    <div class="col">
+                        <label for="currencySelectBox"></label>
+                        <input class="form-control" type="submit" value="계산"/>
+                    </div>
+                </div>
+                <!--
+                <div class="row">
+                    <div class="col">
+                        <label for="currencyDigitInput">소수점 선택</label>
+                        <input type="number" class="form-control" id="currencyDigitInput" value="2" step="1" min="0" maxlength="1" inputmode="numeric" max="6">
+
+                    </div>
+                    <div class="col">
+                        <label for="calcDate">거래 일시(한국시간)</label>
+                        <input type="datetime-local" step="3600" class="form-control" id="calcDate" max="2024-01-10T15:27" min="2023-12-01T00:00">
+                    </div>                    
+                </div>
+                -->
+            </div>
+        </form>
+    
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            <div id="theMoreInputMsg">
+                거래 금액 : {{  '{:,.2f}'.format( cal_info['QTY'] ) }} {{  cal_info['CUR_ID']}}<br>
+                신한카드 청구금액 : {{ '{:,}'.format( cal_info['AMT'] ) }} KRW<br>
+                적립률 : {{ '{:.2%}'.format( cal_info['ACC'] ) }}<br>                
+                <br>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            <div id="theMoreTableMsg">
+           <span style="color: rgb(255, 0, 0)">환율정보(1회차) : </span> (최신 갱신일자)<br>
+                           신한 USD/KRW 환율 일자 : {{ sh_info[0]['U_DATE'] }} , ( KRW : {{ '{:,.2f}'.format( sh_info[0]['AMT'] ) }} )  <br>
+                           비자 {{ ex_list[0]['CUR_ID'] }} : 최초 갱신일( {{ ex_list[0]['C_DATE'] }} ) : 마지막 갱신일( {{ ex_list[0]['U_DATE'] }} )
+           </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" id="theMoreTable">
+            <table class="table table-sm table-striped table-hover table_size">
+                <thead>
+                    <tr>
+                    <th style="text-align: right">결제외화</th>
+                    <th style="text-align: right">청구금액</th>
+                    <th style="text-align: right">적립률</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if ex_list %}
+                        {% for i in ex_list %}
+                        <tr>
+                            <td style="text-align:right">{{  '{:,.2f}'.format( i['QTY'] ) }} {{ i['CUR_ID']}}  </td>
+                            <td style="text-align:right">{{  '{:,}'.format( i['AMT'] ) }} KRW</td>
+                            <td style="text-align:right">{{ '{:.2%}'.format( i['ACC'] ) }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}            
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <!--
+        <div class="col">
+            <hr>
+            <h2>자동 인식 입력기</h2>
+            <form>
+                <div>
+                    <label for="magicInput" class="form-label">자동 인식 입력박스</label>
+                    <input type="text" class="form-control" id="magicInput" placeholder="1000 JPY">
+                    <div class="form-text"> 1000 JPY 또는 JPY 1000 이런식으로 입력해 주세요.</div>
+                    <label for="calcDateMagicInput">거래 일시(한국시간)</label>
+                    <input type="datetime-local" class="form-control" id="calcDateMagicInput" max="2024-01-10T15:27" min="2023-12-01T00:00">
+                    <div class="form-text">한국시간 09-24시 기준</div>
+                </div>
+                <div>
+                    <label for="magicInputResultKRW" class="form-label">결과값</label>
+                    <div class="input-group">
+                        <input type="text" readonly="" class="form-control" id="magicInputResultKRW" value="0">
+                        <span class="input-group-text">KRW</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="text" readonly="" class="form-control" id="magicInputPercent" value="0">
+                    <span class="input-group-text">%</span>
+                </div>
+                <div class="input-group">
+                    <div id="magicInputResultMsg">
+                        <br><br><br><br><br>
+                    </div>
+                </div>
+            </form>
+        </div>
+        -->
+    </div>
+    <div class="row">
+        <hr>
+    </div>
+    
+    
+</div>
+
+{% endblock %}

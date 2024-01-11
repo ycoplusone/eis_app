@@ -21,16 +21,30 @@ python -m venv 가상화이름
 # 3.설치 라이브러리
     # 플라스크 라이브러리
     pip install flask
+    
     # SQLAlchemy ORM을 이용하기 위한 라이브러리.
     pip install flask-migrate
+    
     # flask form 모듈 
     pip install flask-wtf
+    
     # email-validator 라이브러리
     pip install email_validator
+    
     # dash 라이브러리
     pip install dash
+    
     # pandas 
     pip install pandas
+    
+    # seaborn
+    pip install seaborn
+    
+    # scikit-learn
+    pip install scikit-learn
+    
+    # pymysql 1.1.0
+    pip install pymysql
 
 
 # 4. 윈도우 path 설정
