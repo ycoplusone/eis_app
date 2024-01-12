@@ -17,10 +17,12 @@
                             <li class="list-group-item">
                                 <div class="ms-2 me-auto">
                                     <!--div class="fw-bold">메이저 1</div-->
-                                    <!--a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='USD' ) }}">USD</a-->
-                                    <div class="me-auto p-1 d-inline-block">메이저</div>
-                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='JPY' ) }}">JPY</a>                                    
+                                    
+                                    <div class="me-auto p-1 d-inline-block">메인</div>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='USD' ) }}">USD</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='EUR' ) }}">EUR</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='MYR' ) }}">MYR</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='JPY' ) }}">JPY</a>                                    
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='GBP' ) }}">GBP</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='CNY' ) }}">CNY</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='AUD' ) }}">AUD</a>
@@ -34,10 +36,9 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="ms-2 me-auto">
-                                    <div class="me-auto p-1 d-inline-block">아시아</div>
+                                    <div class="me-auto p-1 d-inline-block">극동</div>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='THB' ) }}">THB</a>
-                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='VND' ) }}">VND</a>
-                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='MYR' ) }}">MYR</a>
+                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='VND' ) }}">VND</a>                                    
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='TWD' ) }}">TWD</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='INR' ) }}">INR</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='PHP' ) }}">PHP</a>
@@ -45,12 +46,11 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="ms-2 me-auto">
-                                    <div class="me-auto p-1 d-inline-block">유 럽</div>
+                                    <div class="me-auto p-1 d-inline-block">유럽</div>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='SEK' ) }}">SEK</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='NOK' ) }}">NOK</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='DKK' ) }}">DKK</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='PLN' ) }}">PLN</a>
-                                    <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='TRY' ) }}">TRY</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='CZK' ) }}">CZK</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='HUF' ) }}">HUF</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='RUB' ) }}">RUB</a>
@@ -58,7 +58,7 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="ms-2 me-auto">
-                                    <div class="me-auto p-1 d-inline-block">기 타</div>
+                                    <div class="me-auto p-1 d-inline-block">기타</div>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='SAR' ) }}">SAR</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='AED' ) }}">AED</a>
                                     <a class="btn btn-outline-dark" href="{{ url_for('themore.ratecal'  , cur_id='MXN' ) }}">MXN</a>
@@ -74,12 +74,14 @@
                 <div class="row">
                     <div class="col">
                         <label for="currencyAmount">거래 금액</label>
-                        <input id="currencyAmount" name="currencyAmount" class="form-control" type="number" value="{{ cal_info['QTY'] or '1' }}" inputmode="decimal" step="0.01">
+                        <input id="currencyAmount" name="currencyAmount" class="form-control" type="number" value="{{ cal_info['QTY'] or ex_list[0]['QTY'] }}" inputmode="decimal" step="0.01">
                     </div>
                     <div class="col">
                         <label for="currencySelectBox">거래 통화 목록</label>
                         <select id="currencySelectBox" name="currencySelectBox" class="form-select">                            
+                            <option value="USD" {{ 'selected' if cal_info['CUR_ID'] == 'USD'  }}>USD</option>
                             <option value="EUR" {{ 'selected' if cal_info['CUR_ID'] == 'EUR'  }}>EUR</option>
+                            <option value="MYR" {{ 'selected' if cal_info['CUR_ID'] == 'MYR'  }}>MYR</option>
                             <option value="GBP" {{ 'selected' if cal_info['CUR_ID'] == 'GBP'  }}>GBP</option>
                             <option value="JPY" {{ 'selected' if cal_info['CUR_ID'] == 'JPY'  }}>JPY</option>
                             <option value="CAD" {{ 'selected' if cal_info['CUR_ID'] == 'CAD'  }}>CAD</option>
@@ -100,8 +102,7 @@
                             <option value="KRW" {{ 'selected' if cal_info['CUR_ID'] == 'KRW'  }}>KRW</option>
                             <option value="MOP" {{ 'selected' if cal_info['CUR_ID'] == 'MOP'  }}>MOP</option>
                             <option value="LKR" {{ 'selected' if cal_info['CUR_ID'] == 'LKR'  }}>LKR</option>
-                            <option value="MXN" {{ 'selected' if cal_info['CUR_ID'] == 'MXN'  }}>MXN</option>
-                            <option value="MYR" {{ 'selected' if cal_info['CUR_ID'] == 'MYR'  }}>MYR</option>
+                            <option value="MXN" {{ 'selected' if cal_info['CUR_ID'] == 'MXN'  }}>MXN</option>                            
                             <option value="NGN" {{ 'selected' if cal_info['CUR_ID'] == 'NGN'  }}>NGN</option>
                             <option value="NOK" {{ 'selected' if cal_info['CUR_ID'] == 'NOK'  }}>NOK</option>
                             <option value="NPR" {{ 'selected' if cal_info['CUR_ID'] == 'NPR'  }}>NPR</option>
@@ -148,10 +149,16 @@
     <div class="row">
         <div class="col">
             <div id="theMoreInputMsg">
+                {% if cal_info %}                
                 거래 금액 : {{  '{:,.2f}'.format( cal_info['QTY'] ) }} {{  cal_info['CUR_ID']}}<br>
                 신한카드 청구금액 : {{ '{:,}'.format( cal_info['AMT'] ) }} KRW<br>
                 적립률 : {{ '{:.2%}'.format( cal_info['ACC'] ) }}<br>                
                 <br>
+                {% else %}                
+                거래 금액 : {{  '{:,.2f}'.format( ex_list[0]['QTY'] ) }} {{ ex_list[0]['CUR_ID'] }}<br>
+                신한카드 청구금액 : {{ '{:,}'.format( ex_list[0]['AMT'] ) }} KRW<br>
+                적립률 : {{ '{:.2%}'.format( ex_list[0]['ACC'] ) }}<br>                
+                {% endif %}
             </div>
         </div>
     </div>

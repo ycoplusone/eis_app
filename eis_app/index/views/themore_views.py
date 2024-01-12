@@ -14,7 +14,7 @@ dd = dbcon.DbConn()
 @bp.route('/ratecal/<cur_id>' , methods=('GET', 'POST'))
 def ratecal(cur_id):
      
-     
+     print('시작 cur_id',cur_id)
      ex_list = dd.get_exchange_info( {'CUR_ID':cur_id} )  # 결제 리스트     
      sh_info = dd.get_exchange_shinhan_info() # 신한 금액
      cal_info = {}
@@ -30,7 +30,7 @@ def ratecal(cur_id):
             #내림
             return math.floor( num * 100) / 100
           
-          _amt = round( float(amt) ,2) #수량
+          _amt = round( (amt) ,2) #수량
           _aa1 = math.trunc( rounddown( round( _amt * _rate,2 ) * (1+_glo_brand_fee) ) * _bank_rate  )
           _aa2 = math.trunc( _aa1 * _for_sv_fee )   
           _aa3 = _aa1 + _aa2
@@ -39,14 +39,15 @@ def ratecal(cur_id):
           return _tmp
 
      if request.method == 'POST':  # POST 요청
-          print('POST')
+          print('post','='*30)
           _currencyAmount     = request.form['currencyAmount']
           _currencySelectBox  = request.form['currencySelectBox']
           print( '금액 : ', _currencyAmount , type( float(_currencyAmount )) )
           print( '외화 : ', _currencySelectBox )
           cal_info = get_rate( _currencySelectBox , float(_currencyAmount) )
      else :
-          cal_info = get_rate( cur_id , 1.0 )
+          print('else','='*30)
+          cal_info = None #get_rate( cur_id , 1.0 )
 
 
      return render_template('themore/ratecal.html' , ex_list = ex_list , sh_info = sh_info , cal_info=cal_info )
